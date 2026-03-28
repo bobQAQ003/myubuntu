@@ -1,0 +1,142 @@
+/* 替换现有的全局样式 */
+* {
+  font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "RobotoMono Nerd Font", "CaskaydiaCove Nerd Font", "Font Awesome 6 Free", "Font Awesome 6 Free Solid";
+  font-weight: bold;
+  font-size: 16px;
+  color: #dcdfe1;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+}
+
+/* 替换Waybar背景为透明 */
+window#waybar {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  box-shadow: none;
+  color: #ffffff;
+}
+
+.topbar {
+    border-bottom: 3px solid rgba(100, 114, 125, 1);
+}
+
+
+/* 左侧模块组 - 对应 modules-left */
+#cpu,
+#memory,
+#disk,
+#idle_inhibitor,
+#tray,
+#taskbar,
+#custom-media {
+  background-color: rgba(15,27,53,0.9);
+  padding: 4px 6px;
+  margin-top: 6px;
+  margin-left: 6px;
+  margin-right: 2px;
+  border-radius: 10px;
+  border-width: 0px;
+}
+
+/* 中间模块组 - 对应 modules-center */
+#clock,
+#custom-window {
+  background-color: rgba(15,27,53,0.9);
+  padding: 4px 6px;
+  margin-top: 6px;
+  margin-left: 2px;
+  margin-right: 2px;
+  border-radius: 10px;
+  border-width: 0px;
+}
+
+/* 右侧模块组 - 对应 modules-right */
+#pulseaudio,
+#network,
+#custom-lock,
+#custom-reboot,
+#custom-power,
+#custom-poweroff {
+  background-color: rgba(15,27,53,0.9);
+  padding: 4px 6px;
+  margin-top: 6px;
+  margin-left: 2px;
+  margin-right: 6px;
+  border-radius: 10px;
+  border-width: 0px;
+}
+
+/* 窗口标题样式 */
+#custom-window {
+  font-weight: 500;
+  /*font-style: italic;*/
+}
+
+/* 悬停效果 */
+#cpu:hover,
+#memory:hover,
+#disk:hover,
+#idle_inhibitor:hover,
+#tray:hover,
+#custom-media:hover,
+#clock:hover,
+#custom-window:hover,
+#pulseaudio:hover,
+#network:hover,
+#custom-lock:hover,
+#custom-reboot:hover, 
+#custom-power:hover,
+#custom-poweroff:hover {
+  /* background-color: #64727D;*/  /* 改为灰色背景 */
+  /* border-radius: 5px; */         /* 添加5px圆角 */ 
+
+  
+      /* 激活背景色：使用带透明度的白色，看起来更高级 */
+    background-color: rgba(255, 255, 255, 0.25); 
+    
+    /* 文字颜色：如果背景变亮，文字可以调深一点增强对比 */
+    color: #ffffff;
+    
+    /* 添加一个发光感 (可选) */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    
+    /* 悬停时稍微改变圆角大小，增加动感 */
+    border-radius: 8px;
+    
+    /* 强制生效 */
+    transition: all 0.3s cubic-bezier(.55, 0.05, .67, .19);
+}
+
+
+#taskbar button.active {
+    background-color: #64727D;
+    border-radius: 5px;
+}
+#taskbar button.active:hover {
+    background: rgba(88, 91, 112, 0.6);
+}
+
+
+/* 保留电池警告动画 */
+@keyframes blink {
+  to {
+    background-color: #ffffff;
+    color: #000000;
+  }
+}
+
+#battery.bat2.critical:not(.charging) {
+  background-color: #f53c3c;
+  color: #ffffff;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+/* 温度警告样式 */
+#temperature.critical {
+  background-color: #eb4d4b;
+}

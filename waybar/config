@@ -1,0 +1,258 @@
+{
+    // "layer": "top", // Waybar at top layer
+    // "position": "bottom", // Waybar position (top|bottom|left|right)
+    "height": 38, // Waybar height (to be removed for auto height)
+    // "width": 1280, // Waybar width
+    "spacing": 0, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": ["cpu", "memory", "disk","tray", "wlr/taskbar"],
+    "modules-center": ["clock", "niri/workspaces", "custom/window"],
+    "modules-right": ["pulseaudio", "network", "custom/lock", "custom/reboot", "custom/power"],
+    // Modules configuration
+    // "sway/workspaces": {
+    //     "disable-scroll": true,
+    //     "all-outputs": true,
+    //     "warp-on-scroll": false,
+    //     "format": "{name}: {icon}",
+    //     "format-icons": {
+    //         "1": "",
+    //         "2": "",
+    //         "3": "",
+    //         "4": "",
+    //         "5": "",
+    //         "urgent": "",
+    //         "focused": "",
+    //         "default": ""
+    //     }
+    // },
+    "wlr/taskbar": {
+    	"format": "{icon}",
+    	"tooltip-format": "{title}",
+    	"on-click": "activate",
+    	"on-click-middle": "close",
+    },
+    "niri/workspaces": {
+    	"disable-scroll": true,
+    	"all-output": true,
+    	"format": "{icon}",
+    	"on-click": "activate",
+    	"persistent-workspaces": {"*":[1,2,3,4,5,6,7,8,9]},
+    	"format-icons": {
+    	    // Named workspaces
+	    // (you need to configure them in niri)
+    	    "browser": "",
+    	    "discord": "",
+    	    "chat": "<b></b>",
+    	    "active": "",
+            "default": ""
+    	},
+    	
+    },
+    "keyboard-state": {
+        "numlock": true,
+        "capslock": true,
+        "format": "{name} {icon}",
+        "format-icons": {
+            "locked": "",
+            "unlocked": ""
+        }
+    },
+    "mpd": {
+        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
+        "format-disconnected": "Disconnected ",
+        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+        "unknown-tag": "N/A",
+        "interval": 2,
+        "consume-icons": {
+            "on": " "
+        },
+        "random-icons": {
+            "off": "<span color=\"#f53c3c\"></span> ",
+            "on": " "
+        },
+        "repeat-icons": {
+            "on": " "
+        },
+        "single-icons": {
+            "on": "1 "
+        },
+        "state-icons": {
+            "paused": "",
+            "playing": ""
+        },
+        "tooltip-format": "MPD (connected)",
+        "tooltip-format-disconnected": "MPD (disconnected)"
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    },
+    "disk": {
+    	"format": " {}%",
+    	"tooltip-format": "{used} / {total} used"
+    },
+    "clock": {
+        // "timezone": "America/New_York",
+        //"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        //"format-alt": "{:%Y-%m-%d}",
+        "format": "<span color='#BF00FF'>  </span>{:%H:%M} ",
+        "tooltip-format": "{:%Y 年 %m 月 %d 日, %A}",
+        "interval": 1,
+    },
+    "cpu": {
+        // "format": "{usage}% ",
+        "format": "<span color='#FF9F0A'>  </span>{usage}% ",
+        "tooltip": false,
+    },
+    "memory": {
+        //"format": "{}% "
+        "format": "<span color='#8A2BE2'>  </span>{used:0.1f}G/{total:0.1f}G ",
+        "tooltip": true,
+        "tooltip-format": "当前内存占比: {used:0.2f}G/{total:0.2f}G"
+    },
+    /*"temperature": {
+  	"critical-threshold": 80,
+  	"format": " {temperatureC}°C",
+  	"format-critical": " {temperatureC}°C",
+  	"format-icons": ["", "", ""],
+  	"tooltip": true,
+  	"tooltip-format": "当前 CPU 温度: {temperatureC}°C"
+    },*/
+    "temperature": {
+    	"exec": "sensors | awk '/^Package id 0:/ {print int($4)}'",
+    	"format": "<span color='#FFA500'> </span>{}°C ",
+    	"interval": 5,
+    	"tooltip": true,
+    	"tooltip-format": "当前 CPU 温度: {}°C"
+    },
+    /*"backlight": {
+        // "device": "acpi_video1",
+        "format": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    },*/
+    "battery": {
+    	"states": {
+      		"warning": 30,
+      		"critical": 15
+	},
+    	"format": "<span color='#28CD41'> {icon} </span>{capacity}% ",
+    	"format-charging": " 󱐋{capacity}%",
+	"interval": 1,
+    	"format-icons": ["󰂎", "󰁼", "󰁿", "󰂁", "󰁹"],
+    	"tooltip": true
+    },
+    /*"network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "{ipaddr}/{cidr} ",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "Disconnected ⚠",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    },*/
+    "network": {
+    	"format-wifi": "<span color='#00FFFF'> 󰤨 </span>{essid} ",
+    	"format-ethernet": "<span color='#7FFF00'> </span>Wired ",
+    	"tooltip-format": "<span color='#FF1493'> 󰅧 </span>{bandwidthUpBytes}  <span color='#00BFFF'> 󰅢 </span>{bandwidthDownBytes}",
+    	"format-linked": "<span color='#FFA500'> 󱘖 </span>{ifname} (No IP) ",
+    	"format-disconnected": "<span color='#FF4040'>  </span>Disconnected ",
+    	"format-alt": "<span color='#00FFFF'> 󰤨 </span>{signalStrength}% ",
+    	"interval": 1
+    },
+    /*"pulseaudio": {
+        "scroll-step": 5, // %, can be a float
+        "format": "{volume}% {icon} {format_source}",
+        "format-bluetooth": "{volume}% {icon}󰂯 {format_source}",
+        "format-bluetooth-muted": "{icon}󰂲 {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "󰋎",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol",
+    },*/
+    "pulseaudio": {
+    	"format": "<span color='#00FF7F'>{icon}</span>{volume}% ",
+    	"format-muted": "<span color='#FF4040'> 󰖁 </span>0% ",
+    	"format-icons": {
+      	  "headphone": "<span color='#BF00FF'>  </span>",
+      	  "hands-free": "<span color='#BF00FF'>  </span>",
+      	  "headset": "<span color='#BF00FF'>  </span>",
+      	  "phone": "<span color='#00FFFF'>  </span>",
+      	  "portable": "<span color='#00FFFF'>  </span>",
+      	  "car": "<span color='#FFA500'>  </span>",
+      	  "default": [
+	      "<span color='#808080'>  </span>",
+              "<span color='#FFFF66'>  </span>",
+              "<span color='#00FF7F'>  </span>"
+          ]
+        },
+    	"on-click-right": "pavucontrol -t 3",
+    	"on-click": "pactl -- set-sink-mute 0 toggle",
+    	"tooltip": true,
+    	"tooltip-format": "当前系统声音: {volume}%"
+    },
+    "custom/media": {
+        "format": "{icon} {}",
+        "return-type": "json",
+        "max-length": 40,
+        "format-icons": {
+            "spotify": "",
+            "default": "🎜"
+        },
+        "escape": true,
+        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
+        // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+    },
+    "custom/poweroff": {
+	"tooltip": false,
+	"format": "",
+	"on-click": "bash $HOME/.config/waybar/scripts/poweroff.sh"
+    },
+    "custom/weather": {
+    	"return-type": "json",
+    	"exec": "sh $HOME/.config/waybar/scripts/weather.sh",
+    	"interval": 300,
+    	"on-click": "firefox https://wttr.in"
+    },
+    "custom/window":{
+    	"exec": "~/.config/waybar/scripts/window.sh",
+    	"interval": 2,
+    	"format": "{}",
+    	"tooltip": false,
+    	"escape": false
+    },
+    "custom/lock": {
+    	"format": "<span color='#00FFFF'>  </span>",
+    	"on-click": "swaylock",  // 改为niri兼容的锁屏命令
+    	"tooltip": true,
+    	"tooltip-format": "锁屏"
+    },
+    "custom/reboot": {
+        "format": "<span color='#FFD700'>  </span>",
+  	"on-click": "systemctl reboot",
+  	"tooltip": true,
+  	"tooltip-format": "重启"
+    },
+    "custom/power": {
+  	"format": "<span color='#FF4040'>  </span>",
+  	"on-click": "systemctl poweroff",
+  	"tooltip": true,
+  	"tooltip-format": "关机"
+    }
+}
+

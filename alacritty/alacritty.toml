@@ -1,0 +1,31 @@
+#[general]
+import = [
+    "~/.config/alacritty/themes/vscode.toml"
+]
+
+# 窗口设置
+[window]
+dimensions = { columns = 120, lines = 30 }
+position = { x = 50, y = 50 }
+padding = { x = 10, y = 10 }
+decorations = "full"  # "full", "none", "buttonless", "transparent"
+
+# 字体设置
+[font]
+normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
+bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
+italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
+size = 12.0
+
+# 光标设置
+[cursor]
+style = { shape = "Block" }
+
+# 滚动设置
+[scrolling]
+history = 10000
+multiplier = 3
+
+# 选择设置
+[selection]
+save_to_clipboard = true

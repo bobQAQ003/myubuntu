@@ -1,0 +1,155 @@
+* {
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: "JetBrainsMono Nerd Font", "Symbols Nerd Font", "RobotoMono Nerd Font", FontAwesome, Roboto, Arial, sans-serif;
+    font-size: 13px;
+    border: none;
+    /* border-radius: 0;
+    min-height: 0;*/
+}
+
+/* 透明 Waybar 背景 */
+#waybar {
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  box-shadow: none;
+}
+
+window#waybar {
+    background-color: rgba(43, 48, 59, 1);
+    color: #ffffff;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+window#waybar.empty {
+    color: rgba(0,0,0,0);
+}
+
+.topbar {
+    border-bottom: 3px solid rgba(100, 114, 125, 1);
+}
+
+.bottombar {
+    border-top: 3px solid rgba(100, 114, 125, 1);
+}
+
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    color: #ffffff;
+}
+
+#workspaces button:hover {
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 3px #ffffff;
+}
+
+#workspaces button.focused {
+    background-color: #64727D;
+    box-shadow: inset 0 3px #ffffff;
+}
+
+#workspaces button.urgent {
+    background-color: #eb4d4b;
+}
+
+#mode {
+    background-color: #64727D;
+    border-top: 3px solid #ffffff;
+}
+
+#backlight,
+#battery.bat1,
+#battery.bat2,
+#clock,
+#cpu,
+#custom-mail,
+#custom-poweroff,
+#custom-weather,
+#custom-window,
+#disk,
+#idle_inhibitor,
+#memory,
+#mode,
+#network.vpn,
+#network.wifi,
+#network.ethernet,
+#network.disconnected,
+#pulseaudio,
+#taskbar,
+#temperature,
+#tray {
+    padding: 0 5px; /* 减少内边距为边框留空间 */
+    margin: 0 1px; /* 添加外边距避免边框重叠 */
+    color: #ffffff;
+    border: 1px solid transparent; /* 透明边框占位，保持布局稳定 */
+    border-radius: 4px; /* 圆角边框 */
+    transition: all 0.2s ease;
+}
+
+#custom-window {
+    padding: 0 10px;
+}
+
+/* 为所有模块添加悬停效果 - 透明边框方框 */
+#backlight:hover,
+#battery:hover,
+#clock:hover,
+#cpu:hover,
+#custom-mail:hover,
+#custom-poweroff:hover,
+#custom-weather:hover,
+#custom-window:hover,
+#disk:hover,
+#idle_inhibitor:hover,
+#memory:hover,
+#network:hover,
+#pulseaudio:hover,
+#temperature:hover,
+#tray:hover {
+    background: rgba(255, 255, 255, 0.1); /* 轻微透明白色背景 */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* 透明白色边框 */
+    border-radius: 4px; /* 圆角边框 */
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2); /* 轻微发光效果 */
+    transition: all 0.2s ease;
+}
+
+/* 添加平滑过渡效果 */
+window#waybar * {
+    transition: all 0.2s ease;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
+#battery.bat2.critical:not(.charging) {
+    background-color: #f53c3c;
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#temperature.critical {
+    background-color: #eb4d4b;
+}
+
+#taskbar button:hover {
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 3px #ffffff;
+}
+
+#taskbar button.active {
+    background-color: #64727D;
+    box-shadow: inset 0 3px #ffffff;
+}
+
+#taskbar button.active:hover {
+    background: rgba(88, 91, 112, 0.6);
+}
