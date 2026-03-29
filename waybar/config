@@ -7,7 +7,7 @@
     // Choose the order of the modules
     "modules-left": ["cpu", "memory", "disk","tray", "wlr/taskbar"],
     "modules-center": ["clock", "niri/workspaces", "custom/window"],
-    "modules-right": ["pulseaudio", "network", "custom/lock", "custom/reboot", "custom/power"],
+    "modules-right": ["pulseaudio", "network", "group/powermenu"],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
@@ -46,7 +46,6 @@
     	    "active": "",
             "default": ""
     	},
-    	
     },
     "keyboard-state": {
         "numlock": true,
@@ -103,8 +102,12 @@
         //"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         //"format-alt": "{:%Y-%m-%d}",
         "format": "<span color='#BF00FF'>  </span>{:%H:%M} ",
-        "tooltip-format": "{:%Y 年 %m 月 %d 日, %A}",
-        "interval": 1,
+        "tooltip-format": "{:%Y/%m/%d %A}\n---\n左键：打开时钟\n右键：打开日历",
+        "max-length": 25,
+        // "tooltip-format": "{:%Y 年 %m 月 %d 日, %A}",
+        "interval": 60,
+        "on-click": "gnome-clocks",
+	"on-click-right": "gnome-calendar",
     },
     "cpu": {
         // "format": "{usage}% ",
@@ -117,14 +120,6 @@
         "tooltip": true,
         "tooltip-format": "当前内存占比: {used:0.2f}G/{total:0.2f}G"
     },
-    /*"temperature": {
-  	"critical-threshold": 80,
-  	"format": " {temperatureC}°C",
-  	"format-critical": " {temperatureC}°C",
-  	"format-icons": ["", "", ""],
-  	"tooltip": true,
-  	"tooltip-format": "当前 CPU 温度: {temperatureC}°C"
-    },*/
     "temperature": {
     	"exec": "sensors | awk '/^Package id 0:/ {print int($4)}'",
     	"format": "<span color='#FFA500'> </span>{}°C ",
@@ -132,11 +127,6 @@
     	"tooltip": true,
     	"tooltip-format": "当前 CPU 温度: {}°C"
     },
-    /*"backlight": {
-        // "device": "acpi_video1",
-        "format": "{percent}% {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", ""]
-    },*/
     "battery": {
     	"states": {
       		"warning": 30,
@@ -148,15 +138,6 @@
     	"format-icons": ["󰂎", "󰁼", "󰁿", "󰂁", "󰁹"],
     	"tooltip": true
     },
-    /*"network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ipaddr}/{cidr} ",
-        "tooltip-format": "{ifname} via {gwaddr} ",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
-    },*/
     "network": {
     	"format-wifi": "<span color='#00FFFF'> 󰤨 </span>{essid} ",
     	"format-ethernet": "<span color='#7FFF00'> </span>Wired ",
@@ -236,23 +217,71 @@
     	"tooltip": false,
     	"escape": false
     },
+    //电源菜单
+    "group/powermenu": {
+    	"orientation": "inherit",
+	"drawer": {
+		"transition-left-to-right": false
+	},
+    	"modules": [
+		"custom/wlogout",
+		"custom/lock",
+      		"custom/reboot",
+      		"custom/logout",
+    	],
+    },
+    "custom/wlogout": {
+    	"tooltip-format": "左键：关机",
+    	"format": "<span color='#FF4040'>  </span>",
+    	"on-click": "choice=$(echo '否\\n是' | fuzzel --dmenu --prompt '确定要关机吗？ ' --lines 2); [ \"$choice\" = '是' ] && notify-send '关机中...' && systemctl poweroff",
+    	//"on-click": "wlogout",
+    	"on-scroll-up": true,
+    	"on-scroll-down": true
+    },
     "custom/lock": {
+    	"tooltip": true,
+    	"tooltip-format": "左键：锁屏",
     	"format": "<span color='#00FFFF'>  </span>",
     	"on-click": "swaylock",  // 改为niri兼容的锁屏命令
-    	"tooltip": true,
-    	"tooltip-format": "锁屏"
+    	"on-scroll-down": true,
+    	"on-scroll-up": true,
     },
     "custom/reboot": {
+    	"tooltip-format": "左键：重启",
         "format": "<span color='#FFD700'>  </span>",
-  	"on-click": "systemctl reboot",
   	"tooltip": true,
-  	"tooltip-format": "重启"
+  	"on-scroll-up": true,
+  	"on-scroll-down": true,
+  	"on-click": "choice=$(echo '否\\n是' | fuzzel --dmenu --prompt '确定要重启吗？ ' --lines 2); [ \"$choice\" = '是' ] && notify-send '重启中...' && systemctl reboot",
     },
-    "custom/power": {
-  	"format": "<span color='#FF4040'>  </span>",
-  	"on-click": "systemctl poweroff",
+    "custom/logout": {
+    	"tooltip-format": "左键：登出",
+  	"format": "<span color='#FF9F0A'> 󰈆 </span>",
+  	//"on-click": "niri msg action quit",
+  	"on-click": "choice=$(echo '否\\n是' | fuzzel --dmenu --prompt '确定要注销吗？ ' --lines 2); [ \"$choice\" = '是' ] && notify-send '注销中...' && niri msg action quit",
   	"tooltip": true,
-  	"tooltip-format": "关机"
-    }
+  	"on-scroll-up": true,
+  	"on-scroll-down": true,
+    },
+    "custom/notification": {
+    	"tooltip": true,
+    	"format": "<span size='16pt'>{icon}</span>",
+    	"format-icons": {
+    		"notification": "󱅫",
+      		"none": "󰂜",
+      		"dnd-notification": "󰂠",
+      		"dnd-none": "󰪓",
+      		"inhibited-notification": "󰂛",
+      		"inhibited-none": "󰪑",
+      		"dnd-inhibited-notification": "󰂛",
+      		"dnd-inhibited-none": "󰪑"
+    	},
+    	"return-type": "json",
+    	"exec-if": "which swaync-client",
+    	"exec": "swaync-client -swb",
+    	"on-click": "swaync-client -t -sw",
+    	"on-click-right": "swaync-client -d -sw",
+    	"escape": true
+    },
 }
 

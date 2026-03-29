@@ -73,7 +73,7 @@ input {
 
 cursor {
     xcursor-theme "breeze_cursors"
-    xcursor-size 60
+    xcursor-size 50
 
     hide-when-typing
     hide-after-inactive-ms 1000
@@ -284,7 +284,7 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 // spawn-at-startup "waybar"
 spawn-at-startup "fcitx5" "-d"
-
+spawn-at-startup "swaync" "-s" "/home/szx/.config/swaync/style.css"
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 
@@ -383,6 +383,7 @@ binds {
     Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
     // Mod+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    // Mod+D hotkey-overlay-title="Run an Application: wofi" { spawn "wofi"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
